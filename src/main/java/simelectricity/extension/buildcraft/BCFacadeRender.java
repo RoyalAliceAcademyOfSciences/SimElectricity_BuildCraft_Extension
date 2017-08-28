@@ -74,21 +74,21 @@ public class BCFacadeRender implements ISECoverPanelRender{
 						switch (side.getAxis()) {
 							case X:
 								return new Vec3d(
-										positive ? 1 - pos.zCoord : pos.zCoord,
-										pos.yCoord,
-										pos.xCoord
+										positive ? 1 - pos.z : pos.z,
+										pos.y,
+										pos.x
 								);
 							case Y:
 								return new Vec3d(
-										pos.xCoord,
-										positive ? 1 - pos.zCoord : pos.zCoord,
-										pos.yCoord
+										pos.x,
+										positive ? 1 - pos.z : pos.z,
+										pos.y
 								);
 							case Z:
 								return new Vec3d(
-										pos.yCoord,
-										pos.xCoord,
-										positive ? 1 - pos.zCoord : pos.zCoord
+										pos.y,
+										pos.x,
+										positive ? 1 - pos.z : pos.z
 								);
 							default:
 								throw new IllegalArgumentException();
@@ -125,24 +125,24 @@ public class BCFacadeRender implements ISECoverPanelRender{
 						MutableVertex vertex = vertexes.get(
 								getVertexIndex(vertexesPoses, side.getAxis(), minOrMaxPair.getLeft(), minOrMaxPair.getRight())
 						);
-						vertex.positiond(newPos.xCoord, newPos.yCoord, newPos.zCoord);
+						vertex.positiond(newPos.x, newPos.y, newPos.z);
 						switch (side.getAxis()) {
 							case X:
 								vertex.texf(
-										(float) (minU + (maxU - minU) * (positive ? (1 - newPos.zCoord) : newPos.zCoord)),
-										(float) (minV + (maxV - minV) * (1 - newPos.yCoord))
+										(float) (minU + (maxU - minU) * (positive ? (1 - newPos.z) : newPos.z)),
+										(float) (minV + (maxV - minV) * (1 - newPos.y))
 								);
 								break;
 							case Y:
 								vertex.texf(
-										(float) (minU + (maxU - minU) * (positive ? (1 - newPos.xCoord) : newPos.xCoord)),
-										(float) (minV + (maxV - minV) * (1 - newPos.zCoord))
+										(float) (minU + (maxU - minU) * (positive ? (1 - newPos.x) : newPos.x)),
+										(float) (minV + (maxV - minV) * (1 - newPos.z))
 								);
 								break;
 							case Z:
 								vertex.texf(
-										(float) (minU + (maxU - minU) * (positive ? newPos.xCoord : (1 - newPos.xCoord))),
-										(float) (minV + (maxV - minV) * (1 - newPos.yCoord))
+										(float) (minU + (maxU - minU) * (positive ? newPos.x : (1 - newPos.x))),
+										(float) (minV + (maxV - minV) * (1 - newPos.y))
 								);
 								break;
 						}
@@ -155,13 +155,13 @@ public class BCFacadeRender implements ISECoverPanelRender{
 	public static Vec3d rotate(Vec3d vec, Rotation rotation) {
 		switch (rotation) {
 			case NONE:
-				return new Vec3d(vec.xCoord, vec.yCoord, vec.zCoord);
+				return new Vec3d(vec.x, vec.y, vec.z);
 			case CLOCKWISE_90:
-				return new Vec3d(1 - vec.yCoord, 1 - vec.xCoord, vec.zCoord);
+				return new Vec3d(1 - vec.y, 1 - vec.x, vec.z);
 			case CLOCKWISE_180:
-				return new Vec3d(1 - vec.xCoord, 1 - vec.yCoord, vec.zCoord);
+				return new Vec3d(1 - vec.x, 1 - vec.y, vec.z);
 			case COUNTERCLOCKWISE_90:
-				return new Vec3d(vec.yCoord, vec.xCoord, vec.zCoord);
+				return new Vec3d(vec.y, vec.x, vec.z);
 		}
 		throw new IllegalArgumentException();
 	}
